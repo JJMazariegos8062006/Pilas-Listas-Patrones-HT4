@@ -1,17 +1,46 @@
 package app;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+import stack.Stack;
+import stack.StackFactory;
+import Util.ExpressionConverter;
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Tipo de Stack (arraylist, vector, lista): ");
+        String stackType = scanner.nextLine();
+
+        String listType = "";
+
+        if (stackType.equalsIgnoreCase("lista")) {
+            System.out.println("Tipo de Lista (simple, doble): ");
+            listType = scanner.nextLine();
         }
+
+        String expression = Files.readString(Paths.get("datos.txt")).trim();
+
+        Stack<Character> stackChar =
+                StackFactory.createStack(stackType, listType);
+
+        String postfix =
+                ExpressionConverter.infixToPostfix(expression, stackChar);
+
+        System.out.println("Postfix: " + postfix);
+
+        Stack<Integer> stackInt =
+                StackFactory.createStack(stackType, listType);
+
+        Calculadora calc = Calculadora.getInstance();
+
+        int result = calc.evaluarPostfix(postfix, stackInt);
+
+        System.out.println("Resultado: " + result);
     }
 }
