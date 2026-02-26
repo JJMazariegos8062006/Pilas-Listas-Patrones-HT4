@@ -30,7 +30,7 @@ public class ExpressionConverter {
             } else {
 
                 if (numberBuffer.length() > 0) {
-                    output.append(numberBuffer).append(" ");
+                    output.append(numberBuffer);
                     numberBuffer.setLength(0);
                 }
 
@@ -40,7 +40,7 @@ public class ExpressionConverter {
 
                 else if (c == ')') {
                     while (!stack.isEmpty() && stack.peek() != '(') {
-                        output.append(stack.pop()).append(" ");
+                        output.append(stack.pop());
                     }
                     stack.pop();
                 }
@@ -50,7 +50,7 @@ public class ExpressionConverter {
                     while (!stack.isEmpty() &&
                             precedence(c) <= precedence(stack.peek())) {
 
-                        output.append(stack.pop()).append(" ");
+                        output.append(stack.pop());
                     }
 
                     stack.push(c);
@@ -59,13 +59,13 @@ public class ExpressionConverter {
         }
 
         if (numberBuffer.length() > 0) {
-            output.append(numberBuffer).append(" ");
+            output.append(numberBuffer);
         }
 
         while (!stack.isEmpty()) {
-            output.append(stack.pop()).append(" ");
+            output.append(stack.pop());
         }
 
-        return output.toString().trim();
+        return output.toString();
     }
 }

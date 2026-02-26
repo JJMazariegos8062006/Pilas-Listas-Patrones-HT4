@@ -17,22 +17,20 @@ public class Calculadora {
 
     public int evaluarPostfix(String expression, Stack<Integer> stack) {
 
-        String[] tokens = expression.split(" ");
+        for (char token : expression.toCharArray()) {
 
-        for (String token : tokens) {
-
-            if (token.matches("\\d+")) {
-                stack.push(Integer.parseInt(token));
+            if (Character.isDigit(token)) {
+                stack.push(Character.getNumericValue(token));
             } else {
 
                 int b = stack.pop();
                 int a = stack.pop();
 
                 switch (token) {
-                    case "+": stack.push(a + b); break;
-                    case "-": stack.push(a - b); break;
-                    case "*": stack.push(a * b); break;
-                    case "/": stack.push(a / b); break;
+                    case '+': stack.push(a + b); break;
+                    case '-': stack.push(a - b); break;
+                    case '*': stack.push(a * b); break;
+                    case '/': stack.push(a / b); break;
                 }
             }
         }
@@ -40,3 +38,4 @@ public class Calculadora {
         return stack.pop();
     }
 }
+

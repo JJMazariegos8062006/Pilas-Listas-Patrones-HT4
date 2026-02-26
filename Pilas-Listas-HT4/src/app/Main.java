@@ -4,10 +4,8 @@ import stack.Stack;
 import stack.StackFactory;
 import Util.ExpressionConverter;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
 import java.util.Scanner;
+import java.io.InputStream;
 
 public class Main {
 
@@ -16,41 +14,48 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Tipo de Stack");
-        System.out.println("1.) lista");
-        System.out.println("2.) vector");
-        System.out.println("3.) arraylist");
-        int stackType = scanner.nextInt();
+        System.out.println("1.) Lista");
+        System.out.println("2.) Vector");
+        System.out.println("3.) ArrayList");
+
+        String stackType = String.valueOf(scanner.nextInt());
+        int listType = 0;
 
         switch (stackType) {
-            case 1: System.out.println("tipo de lista");
-                    System.out.println("1.) simple");
-                    System.out.println("2.) encadenada");
-                    System.out.println("2.) doblemente encadenada");
-                    int listType = scanner.nextInt();
 
-                    switch (listType) {
+            case "1":
+                System.out.println("Tipo de lista:");
+                System.out.println("1.) Simple");
+                System.out.println("2.) Encadenada");
+                System.out.println("3.) Doblemente encadenada");
 
-                        case 1:
+                listType = scanner.nextInt();
+                break;
 
-                        case 2:
+            case "2":
+                System.out.println("Usando Stack con Vector");
+                break;
 
-                        case 3:
-
-                        default:
-                    }
-
-            case 2: System.out.println("tipo de arraylist a escoger");
-
-            case 3: System.out.println("tipo de stack a escoger");
-
+            case "3":
+                System.out.println("Usando Stack con ArrayList");
+                break;
 
             default:
+                System.out.println("Opción inválida");
+                return;
         }
+
+        InputStream is = Main.class.getResourceAsStream("/datos.txt");
+
+        if (is == null) {
+            System.out.println("No se encontró datos.txt dentro de src");
+            return;
         }
-        String expression = Files.readString(Paths.get("datos.txt")).trim();
+
+        String expression = new String(is.readAllBytes()).trim();
 
         Stack<Character> stackChar =
-                StackFactory.createStack(stackType, listType);
+                StackFactory.createStack(Integer.parseInt(stackType), listType);
 
         String postfix =
                 ExpressionConverter.infixToPostfix(expression, stackChar);
@@ -58,7 +63,7 @@ public class Main {
         System.out.println("Postfix: " + postfix);
 
         Stack<Integer> stackInt =
-                StackFactory.createStack(stackType, listType);
+                StackFactory.createStack(Integer.parseInt(stackType), listType);
 
         Calculadora calc = Calculadora.getInstance();
 

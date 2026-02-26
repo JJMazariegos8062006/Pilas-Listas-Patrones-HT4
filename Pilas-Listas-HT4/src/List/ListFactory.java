@@ -2,18 +2,23 @@ package List;
 
 public class ListFactory {
 
-    public static <T> List<T> createList(String type) {
+    public static <T> ListAbstract createList(String type) {
 
         switch (type.toLowerCase()) {
 
+            case "1":
             case "simple":
-                return new ListSinglyLinked<T>();
+            case "singly":
+                return new ListSinglyLinked<>();
 
+            case "2":
             case "doble":
-                return new ListDoublyLinked<T>();
+            case "doblemente":
+            case "double":
+                return new ListDoublyLinked<>();
 
             default:
-                throw new IllegalArgumentException("Tipo de lista inválido");
+                throw new IllegalArgumentException("Tipo de lista inválido: " + type);
         }
     }
 }
